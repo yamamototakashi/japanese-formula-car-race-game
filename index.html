@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<meta name="theme-color" content="#0a0f1d" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="JF Race" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="apple-touch-icon" href="./icon-192.png" />
+<link rel="icon" href="./icon-192.png" />
+<link rel="stylesheet" href="./css/style.css" />
+<title>Japanese Formula — Race Strategy</title>
+</head>
+<body>
+
+<!-- ========== TITLE ========== -->
+<section id="screen-title" class="screen active">
+  <div class="title-wrap">
+    <div class="brand-mark">F</div>
+    <h1 class="title-jp">JAPANESE FORMULA</h1>
+    <p class="title-sub">RACE STRATEGY</p>
+    <div class="title-actions">
+      <button class="btn primary lg" data-action="goto-course">START</button>
+      <button class="btn ghost" data-action="goto-records">RECORDS</button>
+    </div>
+    <p class="version">MVP · v1.0</p>
+  </div>
+</section>
+
+<!-- ========== COURSE SELECT ========== -->
+<section id="screen-course" class="screen">
+  <header class="topbar">
+    <button class="btn back" data-action="goto-title">‹ BACK</button>
+    <h2>SELECT COURSE</h2>
+  </header>
+
+  <div class="course-list" id="courseList"></div>
+
+  <div class="course-options">
+    <h3>SETTINGS</h3>
+    <div class="opt-row">
+      <span>ピット義務</span>
+      <div class="seg" id="pitMandatorySeg">
+        <button data-val="true" class="active">あり</button>
+        <button data-val="false">なし</button>
+      </div>
+    </div>
+    <div class="opt-row">
+      <span>周回数</span>
+      <div class="seg" id="lapsSeg">
+        <button data-val="15">15</button>
+        <button data-val="20" class="active">20</button>
+        <button data-val="25">25</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn primary lg full" id="btnStartRace" disabled>RACE</button>
+</section>
+
+<!-- ========== RACE ========== -->
+<section id="screen-race" class="screen">
+  <header class="race-top">
+    <div class="cell"><span class="lbl">POS</span><span class="val" id="rPos">--</span></div>
+    <div class="cell"><span class="lbl">LAP</span><span class="val" id="rLap">--</span></div>
+    <div class="cell"><span class="lbl">COURSE</span><span class="val sm" id="rCourse">--</span></div>
+  </header>
+
+  <div class="gap-row">
+    <div class="gap">
+      <div class="gap-lbl">前車</div>
+      <div class="gap-val" id="rGapAhead">--</div>
+    </div>
+    <div class="gap">
+      <div class="gap-lbl">後車</div>
+      <div class="gap-val" id="rGapBehind">--</div>
+    </div>
+  </div>
+
+  <div class="bars">
+    <div class="bar-block">
+      <div class="bar-head"><span>TIRE</span><span id="rTireText">0%</span></div>
+      <div class="bar"><div class="fill tire" id="rTireBar"></div></div>
+    </div>
+    <div class="bar-block">
+      <div class="bar-head"><span>OTS</span><span id="rOtsText">100%</span></div>
+      <div class="bar"><div class="fill ots" id="rOtsBar"></div></div>
+    </div>
+  </div>
+
+  <div class="status-row">
+    <div class="pace-tag" id="rPaceTag">NORMAL</div>
+    <div class="pit-tag" id="rPitTag">PIT: 必要</div>
+  </div>
+
+  <div class="lap-progress">
+    <div class="lap-fill" id="rLapFill"></div>
+  </div>
+
+  <div class="positions" id="rPositions"></div>
+
+  <div class="actions">
+    <button class="cmd push" data-cmd="PUSH">PUSH</button>
+    <button class="cmd save" data-cmd="SAVE">SAVE</button>
+    <button class="cmd ots" data-cmd="OTS">OTS</button>
+    <button class="cmd pit" data-cmd="PIT">PIT</button>
+  </div>
+
+  <div class="event-log" id="rEventLog"></div>
+</section>
+
+<!-- ========== RESULT ========== -->
+<section id="screen-result" class="screen">
+  <header class="topbar">
+    <h2>RESULT</h2>
+  </header>
+
+  <div class="result-hero">
+    <div class="result-pos" id="resPos">P-</div>
+    <div class="result-sub" id="resSub">--</div>
+  </div>
+
+  <div class="result-stats">
+    <div class="stat"><span class="lbl">TOTAL TIME</span><span class="val" id="resTotal">--</span></div>
+    <div class="stat"><span class="lbl">BEST LAP</span><span class="val" id="resBest">--</span></div>
+    <div class="stat"><span class="lbl">PIT</span><span class="val" id="resPit">--</span></div>
+    <div class="stat"><span class="lbl">COURSE</span><span class="val" id="resCourse">--</span></div>
+  </div>
+
+  <div class="result-table" id="resTable"></div>
+
+  <div class="result-actions">
+    <button class="btn primary" data-action="rematch">REMATCH</button>
+    <button class="btn ghost" data-action="goto-course">CHANGE COURSE</button>
+    <button class="btn ghost" data-action="goto-title">TITLE</button>
+  </div>
+</section>
+
+<!-- ========== RECORDS ========== -->
+<section id="screen-records" class="screen">
+  <header class="topbar">
+    <button class="btn back" data-action="goto-title">‹ BACK</button>
+    <h2>RECORDS</h2>
+  </header>
+
+  <div class="records" id="recordsArea"></div>
+
+  <button class="btn ghost" id="btnClearRecords">記録をクリア</button>
+</section>
+
+<script src="./js/courses.js"></script>
+<script src="./js/race.js"></script>
+<script src="./js/storage.js"></script>
+<script src="./js/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW reg failed', err));
+  });
+}
+</script>
+</body>
+</html>

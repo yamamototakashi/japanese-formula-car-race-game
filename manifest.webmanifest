@@ -1,0 +1,15 @@
+{
+  "name": "Japanese Formula — Race Strategy",
+  "short_name": "JF Race",
+  "description": "5〜8分で1レース。判断力で勝つスーパーフォーミュラ的レース戦略PWA",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06090f",
+  "theme_color": "#0a0f1d",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
